@@ -7,7 +7,7 @@ package main
 
 import (
 	"fmt"
-	"github.com/qcozof/gorm-dm8/dm8"
+	"github.com/qcozof/gorm-dameng/dameng"
 	"gorm.io/gorm"
 	"gorm.io/gorm/logger"
 	"gorm.io/gorm/schema"
@@ -20,7 +20,7 @@ func main()  {
 
 	fmt.Println("连接dameng...")
 	gormConfig := config(true)
-	GORM_DB, err := gorm.Open(dm8.Open( "dm://sysdba:dameng123!@193.100.100.221:5236?autoCommit=true"), gormConfig)
+	GORM_DB, err := gorm.Open(dameng.Open( "dm://sysdba:dameng123!@193.100.100.221:5236?autoCommit=true"), gormConfig)
 
 	if err != nil {
 		fmt.Println("连接失败：", err)

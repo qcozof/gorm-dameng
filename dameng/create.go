@@ -1,9 +1,9 @@
-package dm8
+package dameng
 
 import (
 	"bytes"
 	"database/sql"
-	"github.com/qcozof/gorm-dm8/clauses"
+	"github.com/qcozof/gorm-dameng/clauses"
 	"reflect"
 
 	"github.com/thoas/go-funk"
