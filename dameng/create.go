@@ -3,14 +3,15 @@ package dameng
 import (
 	"bytes"
 	"database/sql"
-	"github.com/qcozof/gorm-dameng/clauses"
 	"reflect"
 
+	"github.com/qcozof/gorm-dameng/clauses"
 	"github.com/thoas/go-funk"
 	"gorm.io/gorm"
 	"gorm.io/gorm/callbacks"
 	"gorm.io/gorm/clause"
 	gormSchema "gorm.io/gorm/schema"
+
 )
 
 func Create(db *gorm.DB) {
