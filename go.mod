@@ -1,4 +1,4 @@
-module github.com/qcozof/gorm-dm8
+module github.com/qcozof/gorm-dameng
 
 go 1.15
 
