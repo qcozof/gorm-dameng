@@ -1,4 +1,4 @@
-package dm8
+package dameng
 
 import (
 	"database/sql"
@@ -18,7 +18,7 @@ import (
 	"gorm.io/gorm/schema"
 
 	//"github.com/ducla5/gorm-driver-oracle/clauses"
-	"github.com/qcozof/gorm-dm8/clauses"
+	"github.com/qcozof/gorm-dameng/clauses"
 )
 
 type Config struct {
