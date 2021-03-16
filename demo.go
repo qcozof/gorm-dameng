@@ -7,7 +7,7 @@ package main
 
 import (
 	"fmt"
-	dm8 "github.com/qcozof/gorm-dm8"
+	"github.com/qcozof/gorm-dm8/dm8"
 	"gorm.io/gorm"
 	"gorm.io/gorm/logger"
 	"gorm.io/gorm/schema"

@@ -18,7 +18,7 @@ import (
 	"gorm.io/gorm/schema"
 
 	//"github.com/ducla5/gorm-driver-oracle/clauses"
-	"github.com/qcozof/clauses"
+	"github.com/qcozof/gorm-dm8/clauses"
 )
 
 type Config struct {
