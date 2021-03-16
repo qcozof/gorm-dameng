@@ -7,8 +7,8 @@ import (
 	"strconv"
 	"strings"
 
-	//_ "github.com/godror/godror"
 	_ "gitee.com/chunanyong/dm"
+	"github.com/qcozof/gorm-dameng/clauses"
 	"github.com/thoas/go-funk"
 	"gorm.io/gorm"
 	"gorm.io/gorm/callbacks"
@@ -16,9 +16,6 @@ import (
 	"gorm.io/gorm/logger"
 	"gorm.io/gorm/migrator"
 	"gorm.io/gorm/schema"
-
-	//"github.com/ducla5/gorm-driver-oracle/clauses"
-	"github.com/qcozof/gorm-dameng/clauses"
 )
 
 type Config struct {
