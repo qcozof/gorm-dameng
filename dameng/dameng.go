@@ -7,7 +7,10 @@ import (
 	"strconv"
 	"strings"
 
-	_ "gitee.com/chunanyong/dm"
+	_ "dm"
+	_ "github.com/golang/snappy"
+	_ "golang.org/x/text"
+
 	"github.com/qcozof/gorm-dameng/clauses"
 	"github.com/thoas/go-funk"
 	"gorm.io/gorm"
