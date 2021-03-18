@@ -66,19 +66,27 @@ func main() {
 		fmt.Println("str:",manageRange)*/
 
 	//-----------------------------------------
-	var memberList []MemberInfo
-	err = GORM_DB.Raw("SELECT CNNAME,MANAGERANGE FROM DW.MEMBER_INFO WHERE MEMBER_ID in('C3DDBD2F17554E8A838DB706C139B883') ").Scan(&memberList).Error //MANAGERANGE ,'4A5A6EA9B47445D48CB30683BEE68C4A'
+	var memberList MemberInfo
+	//err = GORM_DB.Raw("SELECT MEMBER_id,CNNAME,MANAGERANGE FROM DW.MEMBER_INFO WHERE MEMBER_ID in('C3DDBD2F17554E8A838DB706C139B883') ").Scan(&memberList).Error //MANAGERANGE ,'4A5A6EA9B47445D48CB30683BEE68C4A'
+	err = GORM_DB.Raw("select t.*,t.rowid from dw.table1 t where id=1 ").Scan(&memberList).Error //MANAGERANGE ,'4A5A6EA9B47445D48CB30683BEE68C4A'
 	if err != nil {
-		fmt.Errorf("err:", err)
+		fmt.Println("err:", err)
+		os.Exit(0)
+	}
+
+	err = GORM_DB.Exec("update  dw.table1 set CONTENT=? where ID=2 ",memberList.Content).Error
+	if err != nil {
+		fmt.Println("err:", err)
+		os.Exit(0)
 	}
 
 	fmt.Println(memberList)
 }
 
 type MemberInfo struct {
-	//MemberId    string    `gorm:"column:MEMBER_ID"`
-	CnName      string   `gorm:"column:CNNAME"`
-	ManageRange customdbtype.MyDmClob `gorm:"column:MANAGERANGE"`
+	Id      string                `gorm:"column:ID"`
+	Title   string                `gorm:"column:TITLE"`
+	Content customdbtype.MyDmClob `gorm:"column:CONTENT"`
 }
 
 func config(logMode bool) (c *gorm.Config) {

@@ -19,7 +19,7 @@ func (g MyDmClob) Value() (driver.Value, error) {
 	if len(g) == 0 {
 		return nil, nil
 	}
-	return g, nil
+	return string(g), nil
 }
 
 // 将数据库中取出的数据，赋值给目标类型
