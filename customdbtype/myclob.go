@@ -12,33 +12,33 @@ import (
 	"fmt"
 )
 
-type MyDmClob string
+type MyClob string
 
 // 写入数据库之前，对数据做类型转换
-func (g MyDmClob) Value() (driver.Value, error) {
-	if len(g) == 0 {
+func (clob MyClob) Value() (driver.Value, error) {
+	if len(clob) == 0 {
 		return nil, nil
 	}
-	return string(g), nil
+	return string(clob), nil
 }
 
 // 将数据库中取出的数据，赋值给目标类型
-func (g *MyDmClob) Scan(v interface{}) error {
+func (clob *MyClob) Scan(v interface{}) error {
 	switch v.(type) {
 	case *dm.DmClob:
 		tmp := v.(*dm.DmClob)
 		le, err := tmp.GetLength()
 		if err != nil {
-			return errors.New(fmt.Sprint("err2", err))
+			return errors.New(fmt.Sprint("err：", err))
 		}
 
 		str, err := tmp.ReadString(1, int(le))
-		*g = MyDmClob(str)
+		*clob = MyClob(str)
 		break
 
-		//非clob，用当成字符串
+	//非clob，当成字符串，兼容oracle
 	default:
-		*g = MyDmClob(v.(string))
+		*clob = MyClob(v.(string))
 	}
 	return nil
 }
