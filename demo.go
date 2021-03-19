@@ -1,5 +1,5 @@
 /**
- * @Description $
+ * @Description 操作oracle和dameng
  * @Author $
  * @Date $ $
  **/
@@ -7,20 +7,22 @@ package main
 
 import (
 	"fmt"
+	"github.com/qcozof/gorm-dameng/customdbtype"
 	"log"
 	"os"
 	"time"
 
 	"github.com/cengsin/oracle"
-	"github.com/qcozof/gorm-dameng/customdbtype"
 	"github.com/qcozof/gorm-dameng/dameng"
 	"gorm.io/gorm"
 	"gorm.io/gorm/logger"
 	"gorm.io/gorm/schema"
 )
 
+const dbType = "dameng"
+
 func main() {
-	dbType := "dameng"
+
 	var err error
 	var GORM_DB *gorm.DB
 
@@ -67,26 +69,47 @@ func main() {
 
 	//-----------------------------------------
 	var memberList MemberInfo
-	//err = GORM_DB.Raw("SELECT MEMBER_id,CNNAME,MANAGERANGE FROM DW.MEMBER_INFO WHERE MEMBER_ID in('C3DDBD2F17554E8A838DB706C139B883') ").Scan(&memberList).Error //MANAGERANGE ,'4A5A6EA9B47445D48CB30683BEE68C4A'
-	err = GORM_DB.Raw("select t.*,t.rowid from dw.table1 t where id=1 ").Scan(&memberList).Error //MANAGERANGE ,'4A5A6EA9B47445D48CB30683BEE68C4A'
+	//err = GORM_DB.Raw("SELECT MEMBER_ID,CNNAME,MANAGERANGE FROM DW.MEMBER_INFO WHERE MEMBER_ID in('C3DDBD2F17554E8A838DB706C139B883') ").Scan(&memberList).Error //MANAGERANGE ,'4A5A6EA9B47445D48CB30683BEE68C4A'
+	//err = GORM_DB.Raw("select t.ID,t.Title,t.Content,t.rowid from dw.table1 t where id=1 ").Scan(&memberList).Error //MANAGERANGE ,'4A5A6EA9B47445D48CB30683BEE68C4A'
+
+	// 读取
+	GORM_DB.Select("MEMBER_ID,CNNAME").Where("MEMBER_ID = ?", "C3DDBD2F17554E8A838DB706C139B883").Find(&memberList) // 查询id为1的product
+	//GORM_DB.First(&memberList, "MEMBER_ID = ?", "C3DDBD2F17554E8A838DB706C139B883").Select("ID") // 查询code为l1212的product
 	if err != nil {
 		fmt.Println("err:", err)
 		os.Exit(0)
 	}
 
-	err = GORM_DB.Exec("update  dw.table1 set CONTENT=? where ID=2 ",memberList.Content).Error
+/*	err = GORM_DB.Exec("update  dw.table1 set CONTENT=? where ID=2 ").Error
 	if err != nil {
 		fmt.Println("err:", err)
 		os.Exit(0)
-	}
+	}*/
+
+/*	err = GORM_DB.Exec("insert into  dw.table1(tiTle,conTENt)values('标题6','内容6') ").Error
+	//err = GORM_DB.Exec("update  dw.table1 set title='标题333',content='内容333' where id=3").Error
+	if err != nil {
+		fmt.Println("err:", err)
+		os.Exit(0)
+	}*/
 
 	fmt.Println(memberList)
 }
 
+//column名与增删改查的字段名大小写要保持一致，否则取不到
+/*type MemberInfo struct {
+	Id      string              `gorm:"column:ID"`
+	Title   string              `gorm:"column:TITLE"`
+	Content customdbtype.MyClob `gorm:"column:CONTENT"`
+}*/
+
+func (MemberInfo) TableName() string {
+	return "dw.MEMBER_INFO"
+}
 type MemberInfo struct {
-	Id      string                `gorm:"column:ID"`
-	Title   string                `gorm:"column:TITLE"`
-	Content customdbtype.MyDmClob `gorm:"column:CONTENT"`
+	MemberId    string              `gorm:"column:MEMBER_ID"`
+	CnName      string              `gorm:"column:CNNAME"`
+	ManageRange customdbtype.MyClob `gorm:"column:MANAGERANGE"`
 }
 
 func config(logMode bool) (c *gorm.Config) {
