@@ -7,9 +7,10 @@ package customdbtype
 
 import (
 	"database/sql/driver"
-	"dm"
 	"errors"
 	"fmt"
+
+	"gitee.com/chunanyong/dm"
 )
 
 type MyClob string
